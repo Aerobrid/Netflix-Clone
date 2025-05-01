@@ -7,6 +7,8 @@ import express from 'express';
 import authRoutes from './routes/auth.route.js'; 
 // contains all the routes related to movies
 import movieRoutes from './routes/movie.route.js';
+// contains all the routes related to TV shows
+import tvRoutes from './routes/tv.route.js';
 
 // config contains environment variables and database connection logic
 import { ENV_VARS } from './config/envVars.js';
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoutes)
 // any routes from movie.route.js will be prefixed with /api/v1/movie (accessible under http://localhost:PORT/api/v1/movie)
 app.use("/api/v1/movie", movieRoutes)
+// any routes from tv.route.js will be prefixed with /api/v1/tv (accessible under http://localhost:PORT/api/v1/tv)
+app.use("/api/v1/tv", tvRoutes);
 
 // start the server and listen on the specified port
 // connect to database
