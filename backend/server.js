@@ -5,6 +5,9 @@ import express from 'express';
 
 // contains all the routes related to authentication
 import authRoutes from './routes/auth.route.js'; 
+// contains all the routes related to movies
+import movieRoutes from './routes/movie.route.js';
+
 // config contains environment variables and database connection logic
 import { ENV_VARS } from './config/envVars.js';
 // connectDB is a function that connects to the database
@@ -21,6 +24,8 @@ app.use(express.json());
 
 // any routes from auth.route.js will be prefixed with /api/v1/auth (accessible under http://localhost:PORT/api/v1/auth)
 app.use("/api/v1/auth", authRoutes)
+// any routes from movie.route.js will be prefixed with /api/v1/movie (accessible under http://localhost:PORT/api/v1/movie)
+app.use("/api/v1/movie", movieRoutes)
 
 // start the server and listen on the specified port
 // connect to database
