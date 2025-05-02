@@ -2,6 +2,8 @@
 // by changing type to "module" in package.json, we use import/export syntax instead of require/module.exports syntax from "CommonJS" 
 // express is a web framework for Node.js to build web applications and APIs easily
 import express from 'express'; 
+// cookie-parser is a package to parse cookies attached to the client request object
+import cookieParser from 'cookie-parser'; 
 
 // contains all the routes related to authentication
 import authRoutes from './routes/auth.route.js'; 
@@ -14,6 +16,8 @@ import tvRoutes from './routes/tv.route.js';
 import { ENV_VARS } from './config/envVars.js';
 // connectDB is a function that connects to the database
 import { connectDB } from './config/db.js';
+// protectRoute is a middleware that checks if the user is authenticated before allowing access to certain routes
+import { protectRoute } from "./middleware/protectRoute.js";
 
 // an instance of express application named "app"
 const app = express();
@@ -23,13 +27,17 @@ const PORT = ENV_VARS.PORT
 
 // middleware that allows access to req.body in the route handlers (in file routes/auth.route.js) as JSON and parses it
 app.use(express.json()); 
+// allows you to access cookies in the request object (req.cookies) in the route handlers
+app.use(cookieParser());
 
 // any routes from auth.route.js will be prefixed with /api/v1/auth (accessible under http://localhost:PORT/api/v1/auth)
 app.use("/api/v1/auth", authRoutes)
 // any routes from movie.route.js will be prefixed with /api/v1/movie (accessible under http://localhost:PORT/api/v1/movie)
-app.use("/api/v1/movie", movieRoutes)
+// protectRoute checks if the user is authenticated before allowing access to movie routes
+app.use("/api/v1/movie", protectRoute, movieRoutes)
 // any routes from tv.route.js will be prefixed with /api/v1/tv (accessible under http://localhost:PORT/api/v1/tv)
-app.use("/api/v1/tv", tvRoutes);
+// protectRoute checks if the user is authenticated before allowing access to tv routes
+app.use("/api/v1/tv", protectRoute, tvRoutes);
 
 // start the server and listen on the specified port
 // connect to database
