@@ -11,6 +11,8 @@ import authRoutes from './routes/auth.route.js';
 import movieRoutes from './routes/movie.route.js';
 // contains all the routes related to TV shows
 import tvRoutes from './routes/tv.route.js';
+// contains all the routes related to search functionality
+import searchRoutes from './routes/search.route.js';
 
 // config contains environment variables and database connection logic
 import { ENV_VARS } from './config/envVars.js';
@@ -38,6 +40,9 @@ app.use("/api/v1/movie", protectRoute, movieRoutes)
 // any routes from tv.route.js will be prefixed with /api/v1/tv (accessible under http://localhost:PORT/api/v1/tv)
 // protectRoute checks if the user is authenticated before allowing access to tv routes
 app.use("/api/v1/tv", protectRoute, tvRoutes);
+// any routes from search.route.js will be prefixed with /api/v1/search (accessible under http://localhost:PORT/api/v1/search)
+// protectRoute checks if the user is authenticated before allowing access to search routes
+app.use("/api/v1/search", protectRoute, searchRoutes);
 
 // start the server and listen on the specified port
 // connect to database
