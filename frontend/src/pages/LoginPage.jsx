@@ -3,15 +3,28 @@ import { React, useState } from 'react';
 // Importing Link from react-router-dom for navigation
 import { Link } from 'react-router-dom';
 
+// Importing the LoginPage component
+// This component renders the login page for the application
+// It includes a form for users to enter their email and password to log in
 const LoginPage = () => {
+  // State variables to hold the email and password input values
+  // useState is a React hook that allows you to add state to functional components
   const [email, setEmail] = useState('');
+  // useState is used to create state variables for email and password
+  // The initial state is set to an empty string
   const [password, setPassword] = useState('');
 
+  // Function to handle form submission
+  // This function is called when the user submits the login form
   const handleLogin = (e) => {
+    // Prevent the default form submission behavior
+    // This is important to prevent the page from reloading
     e.preventDefault();
     console.log(email, password);
   };
 
+  // Render the login page
+  // The page includes a header with a logo, a form for login, and a link to the signup page
   return <div className='h-screen w-full hero-bg'>
     <header className='max-w-6xl mx-auto flex items-center justify-between p-4'>
       <Link to={"/"}>
@@ -23,6 +36,7 @@ const LoginPage = () => {
       <div className='w-full max-w-md p-8 space-y-6 bg-black/60 rounded-lg shadow-md'>
         <h1 className='text-center text-white text-2xl font-bold mb-4'>Login</h1>
 
+        {/* Form for user login */}
         <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-300 block ">
@@ -50,6 +64,8 @@ const LoginPage = () => {
             />
           </div>
 
+          {/* Submit button for the login form */}
+          {/* This button will trigger the handleLogin function when clicked */}
           <button className='w-full py-2 bg-red-600 text-white font-semibold rounded-md
           hover:bg-red-700'>
             Login
@@ -64,4 +80,6 @@ const LoginPage = () => {
   </div>;
 };
 
+// This component is exported so it can be used in other parts of the application
+// It is the main component for the login page and can be imported into the main application file or router
 export default LoginPage;

@@ -3,11 +3,17 @@ import { React, useState } from 'react';
 // Importing Link from react-router-dom for navigation
 import { Link } from 'react-router-dom';
 
+// Importing the SignUpPage component
+// This component renders the sign-up page for the application
 const SignUpPage = () => {
+  // State variables to hold user input for email, username, and password
+  // useState is a React hook that allows you to add state to functional components
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function to handle form submission
+  // This function is called when the user submits the sign-up form
   const handleSignUp = (e) => {
     e.preventDefault();
     console.log(email, username, password);
@@ -26,6 +32,9 @@ const SignUpPage = () => {
         <h1 className='text-center text-white text-2xl font-bold mb-4'>Sign Up</h1>
 
         <form className="space-y-4" onSubmit={handleSignUp}>
+          {/* Form fields for email, username, and password */}
+          {/* Each field has a label and an input element */}
+          {/* The input elements are styled with Tailwind CSS classes for a consistent look */}
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-300 block ">
               Email
@@ -79,4 +88,5 @@ const SignUpPage = () => {
   </div>;
 };
 
+// Exporting the SignUpPage component so it can be used in other parts of the application
 export default SignUpPage;
