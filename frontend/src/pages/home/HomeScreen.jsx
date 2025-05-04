@@ -41,6 +41,7 @@ const HomeScreen = () => {
 				<Navbar />
 
 				{/* COOL OPTIMIZATION HACK FOR IMAGES */}
+        {/* Show a shimmer effect while the background image is loading */}
 				{imgLoading && (
 					<div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center shimmer -z-10' />
 				)}
