@@ -2,6 +2,7 @@
 import { React, useState } from 'react';
 // Importing Link from react-router-dom for navigation
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../store/authUser';
 
 // Importing the LoginPage component
 // This component renders the login page for the application
@@ -13,6 +14,7 @@ const LoginPage = () => {
   // useState is used to create state variables for email and password
   // The initial state is set to an empty string
   const [password, setPassword] = useState('');
+  const { login } = useAuthStore();
 
   // Function to handle form submission
   // This function is called when the user submits the login form
@@ -20,7 +22,7 @@ const LoginPage = () => {
     // Prevent the default form submission behavior
     // This is important to prevent the page from reloading
     e.preventDefault();
-    console.log(email, password);
+    login({email, password});
   };
 
   // Render the login page

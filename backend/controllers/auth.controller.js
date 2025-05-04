@@ -119,3 +119,13 @@ export async function logout(req, res) {
     res.status(500).json({ success: false, message: "Internal server error" }); 
   }
 }
+
+export async function authCheck(req, res) {
+  try {
+    console.log("req.user:", req.user); // for debugging purposes
+    res.status(200).json({ success: true, user: req.user }); // req.user is set by the protectRoute middleware
+  } catch (error) {
+    console.log("Error in authCheck controller:", error.message);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}

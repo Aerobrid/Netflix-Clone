@@ -2,21 +2,28 @@
 import { React, useState } from 'react';
 // Importing Link from react-router-dom for navigation
 import { Link } from 'react-router-dom';
+import { useAuthStore } from "../store/authUser";
 
 // Importing the SignUpPage component
 // This component renders the sign-up page for the application
 const SignUpPage = () => {
-  // State variables to hold user input for email, username, and password
-  // useState is a React hook that allows you to add state to functional components
-  const [email, setEmail] = useState('');
+  // Using searchParams from the URL to get the email value
+  // This allows the page to pre-fill the email field if the user navigates to this page with an email query parameter
+  const {searchParams} = new URL(document.location);
+  const emailValue = searchParams.get("email");
+  // Using useState to manage the state of the email, username, and password fields
+  // The initial state of the email field is set to the value from the URL if available, otherwise it defaults to an empty string
+  const [email, setEmail] = useState(emailValue || '');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+	const { signup } = useAuthStore();
+  
   // Function to handle form submission
   // This function is called when the user submits the sign-up form
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(email, username, password);
+    signup({ email, username, password });
 
   };
 

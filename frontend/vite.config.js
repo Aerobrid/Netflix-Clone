@@ -7,4 +7,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   // Base configuration for Vite
   plugins: [tailwindcss(), react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:5000", // Proxy target for API requests (whenever using /api in the frontend, it will be proxied to this target)
+      }
+    }
+  }
 })
