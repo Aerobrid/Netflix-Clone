@@ -4,6 +4,7 @@
 import express from 'express'; 
 // cookie-parser is a package to parse cookies attached to the client request object
 import cookieParser from 'cookie-parser'; 
+import path from "path";
 
 // contains all the routes related to authentication
 import authRoutes from './routes/auth.route.js'; 
@@ -26,6 +27,7 @@ const app = express();
 
 // is the port # where the server will listen for incoming requests
 const PORT = ENV_VARS.PORT
+const __dirname = path.resolve();
 
 // middleware that allows access to req.body in the route handlers (in file routes/auth.route.js) as JSON and parses it
 app.use(express.json()); 
@@ -43,6 +45,14 @@ app.use("/api/v1/tv", protectRoute, tvRoutes);
 // any routes from search.route.js will be prefixed with /api/v1/search (accessible under http://localhost:PORT/api/v1/search)
 // protectRoute checks if the user is authenticated before allowing access to search routes
 app.use("/api/v1/search", protectRoute, searchRoutes);
+
+if(ENV_VARS.NODE_ENV === "production"){
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 // start the server and listen on the specified port
 // connect to database
