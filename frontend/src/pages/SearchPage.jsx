@@ -91,6 +91,7 @@ const SearchPage = () => {
 					</button>
 				</form>
 
+				{/* Displaying the search results in a grid layout */}
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 					{results.map((result) => {
 						if (!result.poster_path && !result.profile_path) return null;
