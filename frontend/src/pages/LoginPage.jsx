@@ -14,7 +14,7 @@ const LoginPage = () => {
   // useState is used to create state variables for email and password
   // The initial state is set to an empty string
   const [password, setPassword] = useState('');
-  const { login } = useAuthStore();
+  const { login, isLoggingIn } = useAuthStore();
 
   // Function to handle form submission
   // This function is called when the user submits the login form
@@ -69,8 +69,8 @@ const LoginPage = () => {
           {/* Submit button for the login form */}
           {/* This button will trigger the handleLogin function when clicked */}
           <button className='w-full py-2 bg-red-600 text-white font-semibold rounded-md
-          hover:bg-red-700'>
-            Login
+          hover:bg-red-700' disabled={isLoggingIn}>
+            {isLoggingIn ? "Loading..." : "Login"}
           </button>
         </form>
         <div className='text-center text-gray-400'>

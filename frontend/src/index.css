@@ -26,7 +26,7 @@
 	}
 }
 
-/* Hide scrollbar */
+/* Hide scrollbar with movie sliders */
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
 }
@@ -53,6 +53,7 @@
 	z-index: -1;
 }
 
+/* Editing how the main scrollbar looks*/
 ::-webkit-scrollbar {
 	width: 8px;
 }
