@@ -23,7 +23,6 @@ import { Loader } from "lucide-react";
 // Main App component that defines the routes for the application
 function App() {
   const { user, isCheckingAuth, authCheck } = useAuthStore();
-  console.log("auth user is here:", user)
 
   useEffect(() => {
     authCheck();
