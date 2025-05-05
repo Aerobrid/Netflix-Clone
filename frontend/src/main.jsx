@@ -1,5 +1,5 @@
 // strict mode is used to highlight potential problems in an application
-import { StrictMode } from 'react'
+import { React, StrictMode } from 'react'
 // Importing React and ReactDOM for rendering the application
 import { createRoot } from 'react-dom/client'
 // Importing the main CSS file for styling

@@ -7,6 +7,7 @@ import HomePage from './pages/home/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import WatchPage from './pages/WatchPage';
+import SearchPage from './pages/SearchPage';
 // Importing the Footer component to be displayed on all pages
 import Footer from './components/Footer';
 // Importing the Toaster component for displaying toast notifications
@@ -46,11 +47,14 @@ function App() {
       {/* If the user is logged in, they will be redirected to the home page */}
       {/* The WatchPage component will be rendered at the /watch/:id path */}
       {/* If the user is not logged in, they will be redirected to the login page */}
+      {/* The SearchPage component will be rendered at the /search path */}
+      {/* If the user is not logged in, they will be redirected to the login page */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={"/"} />} />
         <Route path="/signup" element={!user ? <SignUpPage /> : <Navigate to={"/"} />} />
 				<Route path='/watch/:id' element={user ? <WatchPage /> : <Navigate to={"/login"} />} />
+        <Route path='/search' element={user ? <SearchPage /> : <Navigate to={"/login"} />} />
       </Routes>
       {/* Footer component that will be displayed on all pages */}
       {/* It is placed outside the Routes so it appears on all pages */}
