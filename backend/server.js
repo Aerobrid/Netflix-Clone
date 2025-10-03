@@ -2,6 +2,8 @@
 // by changing type to "module" in package.json, we use import/export syntax instead of require/module.exports syntax from "CommonJS" 
 // express is a web framework for Node.js to build web applications and APIs easily
 import express from 'express'; 
+// Keep MongoDB awake
+import mongoose from "mongoose";
 // cookie-parser is a package to parse cookies attached to the client request object
 import cookieParser from 'cookie-parser'; 
 import path from "path";
@@ -45,6 +47,17 @@ app.use("/api/v1/tv", protectRoute, tvRoutes);
 // any routes from search.route.js will be prefixed with /api/v1/search (accessible under http://localhost:PORT/api/v1/search)
 // protectRoute checks if the user is authenticated before allowing access to search routes
 app.use("/api/v1/search", protectRoute, searchRoutes);
+
+// Keep MongoDB awake
+app.get("/ping-db", async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.send("MongoDB is awake 🚀");
+  } catch (err) {
+    console.error("Ping failed:", err);
+    res.status(500).send("Error pinging DB");
+  }
+});
 
 if(ENV_VARS.NODE_ENV === "production"){
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
