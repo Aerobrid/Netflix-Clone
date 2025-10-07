@@ -2,7 +2,7 @@
 [Deployed using Render](https://netflix-clone-olcs.onrender.com)  (May take a minute to load since I used free subscription)
 
 ## Updates
-Added a `/ping-db` endpoint that keeps the free MongoDB Atlas cluster awake by responding to periodic HTTP requests (e.g., via UptimeRobot ~5 min) to prevent auto-pausing. This makes it so that the link above is hopefully running 24/7. Contact me if you are having issues with connecting.
+Added a `/ping-db` endpoint that keeps the free MongoDB Atlas cluster awake by responding to periodic HTTP requests (e.g., via UptimeRobot ~5 min) to prevent auto-pausing. This is only a demo, and may be **unavailable** at times.
 
 ## How to run when cloning (faster option)
 If you instead download project as zip: <br />
