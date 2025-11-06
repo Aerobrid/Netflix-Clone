@@ -48,7 +48,7 @@ app.use("/api/v1/tv", protectRoute, tvRoutes);
 // protectRoute checks if the user is authenticated before allowing access to search routes
 app.use("/api/v1/search", protectRoute, searchRoutes);
 
-// optional endpoint to ping MongoDB cluster
+// GET endpoint to ping MongoDB cluster
 app.get("/ping-db", async (req, res) => {
   try {
     await mongoose.connection.db.admin().ping();
@@ -59,7 +59,7 @@ app.get("/ping-db", async (req, res) => {
   }
 });
 
-// HEAD request for uptime monitors
+// HEAD endpoint to ping for uptime monitors
 app.head("/", (req, res) => {
   res.sendStatus(200);
 });

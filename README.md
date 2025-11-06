@@ -2,7 +2,7 @@
 [Deployed using Render](https://netflix-clone-olcs.onrender.com)  (May take a minute to load since I used free subscription)
 
 ## Updates
-Added head endpoint to prevent auto-pausing via UptimeRobot. This makes it so that the link above is hopefully running 24/7. 
+Added head endpoint to ping website via UptimeRobot. Added GET endpoint to ping for MongoDB cluster via Cronitor. This makes it so that the link above is hopefully running 24/7. Note that this is a demo and service may be **unavailable at times**. 
 
 ## How to run when cloning (faster option)
 If you instead download project as zip: <br />
