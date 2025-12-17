@@ -26,6 +26,10 @@
 	}
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
 /* Hide scrollbar with movie sliders */
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */

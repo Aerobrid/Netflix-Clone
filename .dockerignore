@@ -1,0 +1,17 @@
+# Ignore node modules, local env files and build outputs
+node_modules
+frontend/node_modules
+backend/node_modules
+dist
+frontend/dist
+.env
+.env.local
+.env.sample
+.DS_Store
+.git
+.vscode
+npm-debug.log
+*.log
+.npmrc
+.cache
+coverage
