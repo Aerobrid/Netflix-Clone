@@ -1,6 +1,4 @@
 // Description: HomePage component that conditionally renders HomeScreen or AuthScreen based on user authentication status
-// react for creating the component
-import React from 'react'
 // import HomeScreen and AuthScreen components
 import HomeScreen from './HomeScreen';
 import AuthScreen from './AuthScreen';

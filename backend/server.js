@@ -42,7 +42,7 @@ app.use("/api/v1/auth", authRoutes)
 // protectRoute checks if the user is authenticated before allowing access to movie routes
 app.use("/api/v1/movie", protectRoute, movieRoutes)
 // any routes from tv.route.js will be prefixed with /api/v1/tv (accessible under http://localhost:PORT/api/v1/tv)
-// protectRoute checks if the user is authenticated before allowing access to tv routes
+// protectRoute checks if the user is authenticated before allowing access to TV routes
 app.use("/api/v1/tv", protectRoute, tvRoutes);
 // any routes from search.route.js will be prefixed with /api/v1/search (accessible under http://localhost:PORT/api/v1/search)
 // protectRoute checks if the user is authenticated before allowing access to search routes
@@ -52,7 +52,7 @@ app.use("/api/v1/search", protectRoute, searchRoutes);
 app.get("/ping-db", async (req, res) => {
   try {
     await mongoose.connection.db.admin().ping();
-    res.send("MongoDB is awake 🚀");
+    res.status(200).send("MongoDB is awake 🚀");
   } catch (err) {
     console.error("Ping failed:", err);
     res.status(500).send("Error pinging DB");
@@ -76,5 +76,7 @@ if(ENV_VARS.NODE_ENV === "production"){
 // connect to database
 app.listen(PORT, () => {
   console.log('Server started at http://localhost:' + PORT);
-  connectDB();
+  connectDB()
+      .then((res) => {console.log(res)})
+      .catch((err) => {console.log(err)});
 });
