@@ -1,5 +1,11 @@
+
 ## Website Link
 [Deployed using Render](https://netflix-clone-olcs.onrender.com) 
+
+## Grafana Dashboard Demo
+
+<img width="1852" height="876" alt="Screenshot 2026-01-01 163019" src="https://github.com/user-attachments/assets/3b57e18e-c014-4b5a-b78c-290323da8343" />
+<img width="1852" height="875" alt="Screenshot 2026-01-01 162833" src="https://github.com/user-attachments/assets/66c220d2-8ac2-49f6-808a-c0037b84200e" />
 
 ## env
 
