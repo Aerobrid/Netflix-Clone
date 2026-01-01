@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 // cookie-parser is a package to parse cookies attached to the client request object
 import cookieParser from 'cookie-parser'; 
 import path from "path";
+import { collectDefaultMetrics, Registry, Histogram } from 'prom-client';
 
 // contains all the routes related to authentication
 import authRoutes from './routes/auth.route.js'; 
@@ -36,6 +37,28 @@ app.use(express.json());
 // allows you to access cookies in the request object (req.cookies) in the route handlers
 app.use(cookieParser());
 
+// Prometheus metrics setup
+const register = new Registry();
+collectDefaultMetrics({ register });
+
+const httpRequestDurationSeconds = new Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in seconds',
+  labelNames: ['method', 'route', 'status_code'],
+  buckets: [0.005, 0.01, 0.05, 0.1, 0.5, 1, 2, 5]
+});
+register.registerMetric(httpRequestDurationSeconds);
+
+// Middleware to measure request durations
+app.use((req, res, next) => {
+  const end = httpRequestDurationSeconds.startTimer();
+  res.on('finish', () => {
+    const route = (req.route && req.route.path) || req.path;
+    end({ method: req.method, route, status_code: res.statusCode });
+  });
+  next();
+});
+
 // any routes from auth.route.js will be prefixed with /api/v1/auth (accessible under http://localhost:PORT/api/v1/auth)
 app.use("/api/v1/auth", authRoutes)
 // any routes from movie.route.js will be prefixed with /api/v1/movie (accessible under http://localhost:PORT/api/v1/movie)
@@ -56,6 +79,17 @@ app.get("/ping-db", async (req, res) => {
   } catch (err) {
     console.error("Ping failed:", err);
     res.status(500).send("Error pinging DB");
+  }
+});
+
+// Expose Prometheus metrics
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    console.error('Error collecting metrics:', err);
+    res.status(500).send('Error collecting metrics');
   }
 });
 

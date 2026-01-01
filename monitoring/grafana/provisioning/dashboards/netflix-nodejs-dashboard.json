@@ -1,0 +1,95 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "id": 1,
+      "options": {},
+      "targets": [
+        {"expr": "sum(rate(http_request_duration_seconds_count[5m])) by (route)", "legendFormat": "{{route}}", "refId": "A"}
+      ],
+      "title": "Request Rate (rps)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "id": 2,
+      "options": {},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, route))", "legendFormat": "p95 {{route}}", "refId": "A"}
+      ],
+      "title": "P95 Request Duration (s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "id": 3,
+      "options": {},
+      "targets": [
+        {"expr": "sum(rate(http_request_duration_seconds_count{status_code=~\"5..\"}[5m])) by (route)", "legendFormat": "5xx {{route}}", "refId": "A"},
+        {"expr": "sum(rate(http_request_duration_seconds_count{status_code=~\"4..\"}[5m])) by (route)", "legendFormat": "4xx {{route}}", "refId": "B"}
+      ],
+      "title": "Error Rate (5xx / 4xx)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "id": 4,
+      "options": {},
+      "targets": [
+        {"expr": "rate(process_cpu_seconds_total[5m])", "legendFormat": "cpu (user+sys) r/s", "refId": "A"}
+      ],
+      "title": "CPU (rate)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+      "id": 5,
+      "options": {},
+      "targets": [
+        {"expr": "process_resident_memory_bytes", "legendFormat": "resident memory bytes", "refId": "A"},
+        {"expr": "nodejs_heap_size_used_bytes", "legendFormat": "heap used bytes", "refId": "B"}
+      ],
+      "title": "Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {"defaults": {},"overrides": []},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "id": 6,
+      "options": {},
+      "targets": [
+        {"expr": "nodejs_eventloop_lag_seconds", "legendFormat": "event loop lag", "refId": "A"}
+      ],
+      "title": "Event Loop Lag",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": ["nodejs","app","prometheus"],
+  "templating": {"list": []},
+  "time": {"from": "now-5m", "to": "now"},
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Netflix Clone - Node.js App",
+  "uid": "netflix-nodejs",
+  "version": 1
+}
