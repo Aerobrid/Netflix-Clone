@@ -1,8 +1,25 @@
 ## Website Link
 [Deployed using Render](https://netflix-clone-olcs.onrender.com) 
 
+## env
+
+Create a `.env` file in the project root from the provided `.env.sample` and fill in your values:
+
+```powershell
+copy .env.sample .env
+```
+
+Environment variables (see `.env.sample`):
+
+- `PORT` — port the Node backend listens on (default: `5000`).
+- `MONGO_URI` — MongoDB connection URI for your database.
+- `NODE_ENV` — `development` or `production`.
+- `JWT_SECRET` — secret used to sign JWT tokens.
+- `TMDB_API_KEY` — The Movie DB API key used by the frontend/backend for movie data.
+
 ## Updates
 
+- Added Prometheus with Grafana to monitor app containers locally for development
 - Deployed Docker image to AWS Elastic Container Registry
 - Created an AWS Elastic Compute Cloud (EC2) instance to pull the ECR Docker image 
 - Deployed app using NGINX reverse proxy with valid domain name and SSL certification through certbot

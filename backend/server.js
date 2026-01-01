@@ -7,7 +7,8 @@ import mongoose from "mongoose";
 // cookie-parser is a package to parse cookies attached to the client request object
 import cookieParser from 'cookie-parser'; 
 import path from "path";
-import { collectDefaultMetrics, Registry, Histogram } from 'prom-client';
+// for producing/exposing the metrics for Grafana 
+import { collectDefaultMetrics, Registry, Histogram, Gauge, Counter } from 'prom-client';
 
 // contains all the routes related to authentication
 import authRoutes from './routes/auth.route.js'; 
@@ -47,14 +48,37 @@ const httpRequestDurationSeconds = new Histogram({
   labelNames: ['method', 'route', 'status_code'],
   buckets: [0.005, 0.01, 0.05, 0.1, 0.5, 1, 2, 5]
 });
-register.registerMetric(httpRequestDurationSeconds);
+const httpInProgress = new Gauge({
+  name: 'http_inprogress_requests',
+  help: 'Number of in-progress HTTP requests'
+});
+const httpErrors = new Counter({
+  name: 'http_errors_total',
+  help: 'Total number of HTTP errors',
+  labelNames: ['method', 'route', 'status_code']
+});
+const dbQueryDurationSeconds = new Histogram({
+  name: 'db_query_duration_seconds',
+  help: 'Duration of DB queries in seconds',
+  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1]
+});
 
-// Middleware to measure request durations
+register.registerMetric(httpRequestDurationSeconds);
+register.registerMetric(httpInProgress);
+register.registerMetric(httpErrors);
+register.registerMetric(dbQueryDurationSeconds);
+
+// Middleware to measure request durations, in-progress requests and errors
 app.use((req, res, next) => {
+  httpInProgress.inc();
   const end = httpRequestDurationSeconds.startTimer();
   res.on('finish', () => {
     const route = (req.route && req.route.path) || req.path;
     end({ method: req.method, route, status_code: res.statusCode });
+    httpInProgress.dec();
+    if (res.statusCode >= 400) {
+      httpErrors.inc({ method: req.method, route, status_code: res.statusCode });
+    }
   });
   next();
 });
